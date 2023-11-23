@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-//use App\Http\Controllers\ExampleController;
-use App\Http\Controllers\AddCarController;
+use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\CarsController;
+use App\Http\Controllers\NewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -10,190 +12,93 @@ use App\Http\Controllers\AddCarController;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
 |
 */
 
 Route::get('/', function () {
     return view('welcome');
 });
-// بحدد مسار للمستخدم
 
-//Route::get('test', function () {
-   // return 'welcome to my first route';
+//Route::get('about', function () {
+//    return 'About page';
 //});
-// ببعت هنا parameter
-//  المستخدم هيدخل على لينك اسمه يوزر وهيكتب حاجه مش عارف اي هى اعتبر اسمها نيم ف ابعتلى واطبع الكلمه +اللى هو كتبه
-
-// Route::get('user/{name}', function ($name) {
-//     return 'the username is' . $name;
-// });
-
-//Route::get('user/{name}/{ege}', function ($name,$ege) {
-  //  return 'the username is :' . $name . 'and age is' . $ege ;
+//
+//Route::get('contact-us', function () {
+//    return 'Contact US page';
 //});
-// لو عايز العمر يكون اخيارى يعتى مش لازم يدخله
-
-//Route::get('user/{name}/{age?}', function ($name,$age=0) {
-    //if($age!==0)
-   // {
-    //    return 'the name is :' . $name . ' "<br>"and age is :' . $age ;
-
-   // }else{
-     //   return 'the username is :' . $name ;
-   // }
-   
+//
+//Route::prefix('support')->group(function () {
+//   Route::get('/', function () {
+//       return 'Support Home page';
+//   });
+//
+//   Route::get('chat', function () {
+//      return 'Chat page';
+//   });
+//
+//    Route::get('call', function () {
+//        return 'Call page';
+//    });
+//
+//    Route::get('ticket', function () {
+//        return 'Ticket page';
+//    });
 //});
-// لو عايز العمر يكون اخيارى يعتى مش لازم يدخله
-// بطريقه كود اسهل واقصر وبيسمح انه يدخل العمر او لا بطريقه اسهل
-//Route::get ('user/{name}/{age?}',function($name,$age=0){
-   // $msg = 'the username is : ' . $name;
-    //if($age > 0){
-     //   $msg .= ' and age is: ' . $age ;
-    //}
-   // return $msg ;
+//
+//Route::prefix('training')->group(function () {
+//    Route::get('/', function () {
+//        return 'Training Home page';
+//    });
+//
+//    Route::get('ict', function () {
+//        return 'ICT page';
+//    });
+//
+//    Route::get('hr', function () {
+//        return 'HR page';
+//    });
+//
+//    Route::get('marketing', function () {
+//        return 'Marketing page';
+//    });
+//
+//    Route::get('logistics', function () {
+//        return 'Logistics page';
+//    });
 //});
-// لا تقبل العمر الا بقيمه رقميه
-//Route::get ('user/{name}/{age?}',function($name,$age=0){
-  //  $msg = 'the username is : ' . $name;
-   // if($age > 0){
-   //     $msg .= ' and age is: ' . $age ;
-   // }
-   // return $msg ;
-//})->where(['age'=> '[0-9]+']);
 
-//Route::get ('user/{name}/{age?}',function($name,$age=0){
-  //  $msg = 'the username is : ' . $name;
-  // if($age > 0){
-    //   $msg .= ' and age is: ' . $age ;
-   // }
-  // return $msg ;
-//})->whereNumber('age');
-
-//Route::get ('user/{name}/{age?}',function($name,$age=0){
-   // $msg = 'the username is : ' . $name;
-  // if($age > 0){
-    //   $msg .= ' and age is: ' . $age ;
-    //}
-  // return $msg ;
-//})->whereAlpha('name');
+//Route::fallback(function () {
+//   return redirect('/');
+//});
 
 
-//Route::get ('user/{name}/{age?}',function($name,$age=0){
-  //  $msg = 'the username is : ' . $name;
-   //if($age > 0){
-   //    $msg .= ' and age is: ' . $age ;
-   // }
-  // return $msg ;
-   // بيسمح ادخل الاسم به ارقام
-//})->where(['age'=>'[0-9]+', 'name'=>'[a-zA-Z0-9]+']);
-//->whereAlphaNumeric('name');
+Route::get('cv', function () {
+   return view('cv');
+});
 
-//Route::get ('user/{name}/{age?}',function($name,$age=0){
-  //  $msg = 'the username is : ' . $name;
-  // if($age > 0){
-    //   $msg .= ' and age is: ' . $age ;
-    //}
-  // return $msg ;
-//})->whereIn('name',['Basma', 'Ashraf']);
+Route::get('login', function () {
+    return view('login');
+});
 
+Route::post('receive', function () {
+    return "data received";
+})->name('receive');
 
-//Route::prefix('product')->group(function () {
-    //Route::get('/', function(){
+Route::get('test', [ExampleController::class, 'test']);
 
-    //return 'product home page';
-    //});
-       // Route::get('laptop', function(){
-        //return 'laptop page';
-        //});
-      //  Route::get('camera', function(){
-          //  return 'camera page';
-           // });
-          //  Route::get('projector', function(){
-            //    return 'projector page';
-             //   });
-            //});
+//Route::get('add-car', [CarController::class, 'add_car']);
+//Route::post('car-added', [CarController::class, 'added'])->name('car-added');
+//
+//Route::get('car-added', fn() => redirect('add-car'));
 
-            
-//Route::prefix('Support')->group(function () {
-   // Route::get('/', function(){
+Route::get('add-car', [CarsController::class, 'create']);
+Route::post('car-added', [CarsController::class, 'store'])->name('car-added');
+Route::get('car-index', [CarsController::class, 'index']);
+Route::get('edit-car/{id}', [CarsController::class, 'edit']);
+Route::put('update-car/{id}', [CarsController::class, 'update'])->name('update-car');
 
-   // return 'Support home page';
-   // });
-      //  Route::get('Chat', function(){
-       // return 'Chat page';
-       // });
-       // Route::get('Call ', function(){
-          //  return 'Call page';
-           // });
-           // Route::get('Ticket', function(){
-             //   return 'Ticket page';
-               // });
-          //  });
+Route::get('create-news', [NewsController::class, 'create']);
+Route::post('store-news', [NewsController::class, 'store'])->name('store-news');
 
-                        
-//Route::prefix('Training')->group(function () {
- // Route::get('/', function(){
-
-  //return 'Training home page';
-  //});
-    //  Route::get('HR', function(){
-     // return 'HR page';
-      //});
-     // Route::get('ICT', function(){
-      //    return 'ICT page';
-       //   });
-        //  Route::get('Marketing', function(){
-          //    return 'Marketing page';
-          //    });
-           //   Route::get('Logistics', function(){
-            //    return 'Logistics page';
-            //    });
-
-
-      //    });
-        //  Route::get('About', function () {
-          //  return 'welcome to About';
-       // });
-
-       // Route::get('Contact us', function () {
-        //  return ' Contact us';
-      //});
-
-      //Route::fallback(function() {
-       // return redirect('/');
-      //  });
-
-     // Route::get('cv', function(){
-      //return view('cv');
-        //});
-
-        //Route::get('login', function(){
-           // return view('login');
-           // });
-
-          // Route::post('receive', function() {
-          //  return 'data received' ;
-          //  })->name('receive');
-
-
-            //Route::get('test1', [exampleController::class, 
-            //'test1']);
-
-           
-
-      Route::get('AddCar', function(){
-        return view('AddCar');
-      });
-
-        // Route::post('receive', function() {
-        //    return 'ShowData' ;
-        //    })->name('ShowData');
-
-    
-      
-              // Route::post('receive', function() {
-              //    return 'Show' ;
-              //    });
-      Route::post('show', [AddCarController::class, 'index'])->name('Show');

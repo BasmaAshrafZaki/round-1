@@ -102,3 +102,8 @@ Route::put('update-car/{id}', [CarsController::class, 'update'])->name('update-c
 Route::get('create-news', [NewsController::class, 'create']);
 Route::post('store-news', [NewsController::class, 'store'])->name('store-news');
 
+
+Route::get('News', [NewsController::class, 'index']);
+Route::get('edit-News/{News_id}',[NewsController::class,'edit']);
+Route::put('update-News/{News_id}',[NewsController::class,'update'])->name('update-News');
+

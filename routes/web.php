@@ -105,5 +105,14 @@ Route::post('store-news', [NewsController::class, 'store'])->name('store-news');
 
 Route::get('News', [NewsController::class, 'index']);
 Route::get('edit-News/{News_id}',[NewsController::class,'edit']);
+
 Route::put('update-News/{News_id}',[NewsController::class,'update'])->name('update-News');
 
+Route::put('updateCar/{id}',[CarsController::class,'update'])->name('updateCar');
+
+Route::get('delete-News/{News_id}',[NewsController::class,'destroy']);
+
+
+//Route::get('Show-News/{News_id}',[NewsController::class,'Show']);
+Route::get(' NewsDetails/{id}', [NewsController::class, 'show'])->name('Show');
+Route::get('CarDetails/{id}', [CarsController::class, 'show'])->name('Show');

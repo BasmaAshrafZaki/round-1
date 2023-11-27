@@ -21,6 +21,7 @@
             <th>Published</th>
             <th>Price</th>
             <th>Edit</th>
+            <th>Show</th>
         </tr>
         </thead>
         <tbody>
@@ -37,6 +38,7 @@
                 </td>
                 <td>{{$car->price}}</td>
                 <td><a href="edit-car/{{$car->id}}">Edit</a></td>
+                <td><a href="CarDetails/{{$car->id}}">Show</a></td>
         </tr>
         @endforeach
 

@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\News;
 class NewsController extends Controller
-{
+{  private $columns =['newsTitle', 'newsContent',
+   'newsAuthor'];
+
     /**
      * Display a listing of the resource.
      */
@@ -21,7 +23,9 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('createNews');
+        //return 'Show data';
+
+       return view('createNews');
     }
 
     /**
@@ -47,7 +51,12 @@ class NewsController extends Controller
     public function show(string $id)
     {
         //
+
+        $News = News::findOrFail($id);
+        return view('NewsDetails',compact('News'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -63,14 +72,32 @@ return view('update',compact('News'));
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->only($this->columns);
+        $data['published'] = isset($data['published'])? true:false;
+
+        //News::where('id', $id)->update($data);
+
+       
+        News::where('id', $id)->update($request->only($this->columns));
+       return 'Updated';
+        
     }
+   
+
+
+
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+
+        News ::where('id', $id)->delete();
+
+
+    return 'deleted' ;
+   
     }
 }

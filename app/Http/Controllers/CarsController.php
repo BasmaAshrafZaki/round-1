@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Car;
 class CarsController extends Controller
 {
+    private $columns =['title', 'description','price'];
     /**
      * Display a listing of the resource.
      */
@@ -22,6 +23,7 @@ class CarsController extends Controller
     public function create()
     {
         //
+        
         return view('addCar');
     }
 
@@ -48,6 +50,8 @@ class CarsController extends Controller
     public function show(string $id)
     {
         //
+        $car = Car::findOrFail($id);
+        return view('CarDetails',compact('car'));
     }
 
     /**
@@ -65,6 +69,8 @@ class CarsController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        Car::where('id', $id)->update($request->only($this->columns));
+        return 'added';
         //
 
     }

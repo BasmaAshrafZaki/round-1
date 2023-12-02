@@ -20,6 +20,71 @@ use App\Http\Controllers\NewsController;
 Route::get('/', function () {
     return view('welcome');
 });
+// مذاكره
+////Route::get('user/{username}',function($username){
+//return 'username of user is' .$username;
+//});
+
+//Route::get('user/{username}/{age}',function($username,$age){
+//return 'username is'. $username .'age is' .$age ;
+//});
+
+// Route::get('user/{username}/{age?}',function($username,$age=0){
+// if($age==0){
+//     return 'username of user is'.$username;
+// }
+// else{ return 'username is'.$username . 'age is'.$age ;}
+// });
+
+// Route::get('user/{username}/{age?}',function($username,$age=0){
+//     $msg='the username is :'.$username;
+//     if($age>0){
+//     $msg.=' the age is :'.$age;
+//     }
+//     return $msg;
+//     })->whereNumber('age'); 
+
+    // Route::get('user/{username}/{age?}',function($username,$age=0){
+    //     $msg='the username is :'.$username;
+    //     if($age>0){
+    //     $msg.=' the age is :'.$age;
+    //     }
+    //     return $msg;
+    //     })->whereAlpha('username') ; 
+
+    // Route::get('user/{username}/{age?}',function($username,$age=0){
+    //     $msg='the username is :'.$username;
+    //     if($age>0){
+    //     $msg.=' the age is :'.$age;
+    //     }
+    //     return $msg;
+    //     })->whereIn('username',['Basma','Ashraf']);
+    
+   
+    // Route::get('user/{username}/{age?}',function($username,$age=0){
+    //         $msg='the username is :'.$username;
+    //         if($age>0){
+    //         $msg.=' the age is :'.$age;
+    //         }
+    //         return $msg;
+    //         })->where(['username'=>'[a-zA-Z]+','age'=>'[0-9]+']);
+
+  
+    // Route::get('user/{username}/{age?}',function($username,$age=0){
+    //     $msg='the username is :'.$username;
+    //     if($age>0){
+    //     $msg.=' the age is :'.$age;
+    //     }
+    //     return $msg;
+    //     })->where(['age'=>'[0-9]+']) ;
+
+
+
+
+
+
+
+            
 
 //Route::get('about', function () {
 //    return 'About page';
@@ -116,3 +181,13 @@ Route::get('delete-News/{News_id}',[NewsController::class,'destroy']);
 //Route::get('Show-News/{News_id}',[NewsController::class,'Show']);
 Route::get(' NewsDetails/{id}', [NewsController::class, 'show'])->name('Show');
 Route::get('CarDetails/{id}', [CarsController::class, 'show'])->name('Show');
+
+Route::get('Trashed',[NewsController::class,'Trashed']);
+Route::get('Newsrestore/{id}',[NewsController::class,'restore']);
+Route::get('forceDel/{id}',[NewsController::class,'forceDeleted']);
+
+Route::get('delete-Cars/{id}',[CarsController::class,'destroy']);
+Route::get('TrashedCars',[CarsController::class,'Trashed']);
+Route::get('Carsrestore/{id}',[CarsController::class,'restore']);
+Route::get('forceDelete/{id}',[CarsController::class,'forceDeleted']);
+

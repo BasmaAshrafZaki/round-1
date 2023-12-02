@@ -6,7 +6,7 @@
     <title>CarDetails</title>
 </head>
 <body>
-    Car title: {{  $car->carTitle }}
+Car title:{{$car->title}}
     <br>
     Car Description: {{  $car->description }}
     <br>

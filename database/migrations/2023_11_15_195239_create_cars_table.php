@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('title', 50);
-            $table->text('description');
+            $table->text('description',50);
             $table->boolean('published');
-            $table->double('price');
+            $table->double('price',50);
+            $table->softDeletes();
             $table->timestamps();
+
         });
     }
 

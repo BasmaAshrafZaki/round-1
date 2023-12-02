@@ -21,6 +21,8 @@
 <th>Edit</th>
 <th>Show</th>
 <th>delete</th>
+<th>Newsrestore</th>
+
 </tr>
 </thead>
 <tbody>
@@ -36,7 +38,10 @@
 @endif
 <td><a href="edit-News/{{$News->id}}">Edit</a></td>
 <td><a href="NewsDetails/{{$News->id}}">Show</a></td>
-<td><a href="delete-News/{{$News->id}}">deleteNews</a></td>
+<td><a href="forceDel/{{$News->id}}">deleteNews</a></td>
+<td><a href="Newsrestore/{{$News->id}}">restore</a></td>
+
+
 </tr>
 @endforeach
 </tbody>

@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\News;
+use Illuminate\Http\RedirectResponse;
 class NewsController extends Controller
 {  private $columns =['newsTitle', 'newsContent',
-   'newsAuthor'];
+   'newsAuthor','newsPublished'];
 
     /**
      * Display a listing of the resource.
@@ -33,16 +34,27 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $news = new News();
+        // $news = new News();
 
-        $news->newsTitle = $request->newsTitle;
-        $news->newsContent = $request->newsContent;
-        $news->newsPublished = (isset($request->newsPublished))? true : false;
-        $news->newsAuthor = $request->newsAuthor;
+        // $news->newsTitle = $request->newsTitle;
+        // $news->newsContent = $request->newsContent;
+        // $news->newsPublished = (isset($request->newsPublished))? true : false;
+        // $news->newsAuthor = $request->newsAuthor;
 
-        $news->save();
+        // $news->save();
 
-        return 'News is added successfully';
+        // return 'News is added successfully';
+        $data = $request->only($this->columns);
+        $data['newsPublished'] = isset($data['newsPublished'])? true : false;
+
+         $request->validate([
+            'newsTitle'=>'required|string',
+            'newsContent'=> 'required|string|Max:5',
+            'newsAuthor'=> 'required|string|Max:100',
+            ]);
+           
+            News::create($data);        
+            return ('done');
     }
 
     /**
@@ -72,8 +84,8 @@ return view('update',compact('News'));
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->only($this->columns);
-        $data['published'] = isset($data['published'])? true:false;
+     $data = $request->only($this->columns);
+        $data['published'] = isset($data['published'])? true : false;
 
         //News::where('id', $id)->update($data);
 
@@ -91,13 +103,40 @@ return view('update',compact('News'));
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id):RedirectResponse
     {
 
-        News ::where('id', $id)->delete();
+        News::findOrFail($id)->delete();
 
-
-    return 'deleted' ;
+    return redirect('News');
+}
    
-    }
+    
+
+    public function Trashed( )
+    {
+
+        $News = News::onlyTrashed()->get();
+        return view('Trashed',compact('News'));
+}
+  
+
+
+public function restore(string $id):RedirectResponse
+{
+
+    News::where('id', $id)->restore();
+    return redirect('News');
+
+
+}
+
+public function forceDeleted(string $id):RedirectResponse
+{
+
+    News::where('id', $id)->forceDelete();
+    return redirect('News');
+    
+
+}
 }

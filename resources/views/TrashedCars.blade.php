@@ -11,7 +11,7 @@
 <body>
 
 <div class="container">
-    <h2>Cars Details</h2>
+    <h2> cars Details</h2>
     <p>The .table-hover class enables a hover state on table rows:</p>
     <table class="table table-hover">
         <thead>
@@ -20,18 +20,16 @@
             <th>Description</th>
             <th>Published</th>
             <th>Price</th>
-            <th>Edit</th>
-            <th>Show</th>
-            <th>Delete</th>
-            
+    
+            <th>DeleteCars</th>
+            <th>RestoreCars</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($cars as $car)
+        @foreach($Cars as $car)
         <tr>
                 <td>{{$car->title}}</td>
                 <td>{{$car->description}}</td>
-
                 <td>
                     @if($car->published)
                         Yes
@@ -40,11 +38,10 @@
                     @endif
                 </td>
                 <td>{{$car->price}}</td>
-                <td><a href="edit-car/{{$car->id}}">Edit</a></td>
-                <td><a href="CarDetails/{{$car->id}}">Show</a></td>
-                <td><a href="delete-Cars/{{$car->id}}">deleteCars</a></td>
-               
-                
+              
+                <td><a href="forceDelete/{{$car->id}}">DeleteCars</a></td>
+                <td><a href="Carsrestore/{{$car->id}}">Restore</a></td>
+
         </tr>
         @endforeach
 

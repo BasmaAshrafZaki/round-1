@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Traits\Common;
 use Illuminate\Http\Request;
 use App\Models\Car;
 use Illuminate\Http\RedirectResponse;
 class CarsController extends Controller
 {
+
+    use Common;
+
     private $columns =['title', 'description','price'];
     /**
      * Display a listing of the resource.
@@ -43,16 +46,25 @@ class CarsController extends Controller
         // $car->save();
 
         // return 'Car added successfully';
-       
-        $data = $request->only($this->columns);
-        $data['published'] = isset($data['published'])? true : false;
+       $messages = [
+        'title.required'=>'title is required',
+        'description.required'=>'Should be String',
+        'price.required'=>'Should be number',
 
-         $request->validate([
+       ];
+        // $data = $request->only($this->columns);
+        // $data['published'] = isset($data['published'])? true : false;
+
+        $data = $request->validate([
             'title'=>'required|string',
-            'description'=> 'required|string|Max:5',
+            'description'=> 'required|string|Max:50',
+            'image' => 'required|mimes:png,jpg,jpeg|max:2048',
             'price'=> 'required',
-            ]);
-           
+         ], $messages);
+         $filename = $this->uploadFile($request->image ,'Assets/Images' );
+         $data['image'] = $filename;
+         //$data[published] =isset($request['published'])? 1: 0;
+         $data['published'] =isset($request['published']);
             Car::create($data);        
             return ('done');
     }
@@ -83,9 +95,22 @@ class CarsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        Car::where('id', $id)->update($request->only($this->columns));
+        $messages = [
+            'title.required'=>'title is required',
+            'description.required'=>'Should be String',
+            'price.required'=>'Should be number', ];
+            $data = $request->validate([
+                'title'=>'required|string',
+                'description'=> 'required|string|Max:50',
+                'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+                'price'=> 'required',
+             ], $messages);
+             $filename = $this->uploadFile($request->image ,'Assets/Images' );
+             $data['image'] = $filename;
+             $data['published'] =isset($request['published']); 
+        Car::where('id', $id)->update( $data);
         return 'added';
-        //
+        
 
     }
 

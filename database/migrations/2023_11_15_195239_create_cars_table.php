@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title', 50);
             $table->text('description',50);
             $table->boolean('published');
+            $table->string('image',100);
             $table->double('price',50);
             $table->softDeletes();
             $table->timestamps();

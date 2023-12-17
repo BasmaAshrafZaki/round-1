@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Traits\Common;
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\Category;
 use Illuminate\Http\RedirectResponse;
 class CarsController extends Controller
 {
@@ -26,9 +27,10 @@ class CarsController extends Controller
      */
     public function create()
     {
-        //
+        $categories = category::select('id','categoryName')->get();
+
         
-        return view('addCar');
+        return view('addCar',compact('categories'));
     }
 
     /**
@@ -50,6 +52,7 @@ class CarsController extends Controller
         'title.required'=>'title is required',
         'description.required'=>'Should be String',
         'price.required'=>'Should be number',
+        'category_id.required'=>'Should be choose'
 
        ];
         // $data = $request->only($this->columns);
@@ -60,6 +63,7 @@ class CarsController extends Controller
             'description'=> 'required|string|Max:50',
             'image' => 'required|mimes:png,jpg,jpeg|max:2048',
             'price'=> 'required',
+            'category_id'=>'required|in:1,2'
          ], $messages);
          $filename = $this->uploadFile($request->image ,'Assets/Images' );
          $data['image'] = $filename;
@@ -77,7 +81,7 @@ class CarsController extends Controller
     {
         //
         $car = Car::findOrFail($id);
-        return view('CarDetails',compact('Car'));
+        return view('CarDetails',compact('car'));
     }
 
     /**
@@ -86,8 +90,9 @@ class CarsController extends Controller
     public function edit(string $id)
     {
         $car = Car::findORFail($id);
-
-        return view('editCar', compact('car'));
+        $categories = category::select('id','categoryName')->get();
+        return view('editCar', compact('car','categories'));
+       // return view('editCar', compact('car'));
     }
 
     /**
@@ -95,18 +100,23 @@ class CarsController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $messages= $this->messages();
         $messages = [
             'title.required'=>'title is required',
             'description.required'=>'Should be String',
-            'price.required'=>'Should be number', ];
+            'price.required'=>'Should be number', 
+            'category_id'=>'Should choose a category' 
+        ];
+            
             $data = $request->validate([
                 'title'=>'required|string',
                 'description'=> 'required|string|Max:50',
-                'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+                'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
                 'price'=> 'required',
+                'category_id'=> 'required'
              ], $messages);
-             $filename = $this->uploadFile($request->image ,'Assets/Images' );
-             $data['image'] = $filename;
+             if(isset($request->image)) {   $filename = $this->uploadFile($request->image ,'Assets/Images' );
+                $data['image'] = $filename;}
              $data['published'] =isset($request['published']); 
         Car::where('id', $id)->update( $data);
         return 'added';
@@ -153,7 +163,13 @@ public function forceDeleted(string $id):RedirectResponse
 
 }
 
-
+public function messages(){
+    return [
+        'carTitle.required'=>'Title is required',
+        'description.required'=> 'should be text',
+        'price'=> 'required'
+    ];
+}
 
 
 

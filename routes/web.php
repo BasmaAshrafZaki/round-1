@@ -194,4 +194,6 @@ Route::get('forceDelete/{id}',[CarsController::class,'forceDeleted']);
 Route::get('ShowUpload',[ExampleController::class,'ShowUpload']);
 Route::post('Upload',[ExampleController::class,'Upload'])->name('Upload');
 
+Route::get('Place',[ExampleController::class,'Place']);
 
+Route::get('blog',[ExampleController::class,'blog']);

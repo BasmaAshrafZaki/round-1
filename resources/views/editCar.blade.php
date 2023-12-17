@@ -29,8 +29,17 @@
             <textarea class="form-control" rows="5" id="description" name="description">{{$car->description}}</textarea>
         </div>
         <div class="form-group">
+            <label for="category">category:</label>
+        <select name="category_id" id="category_id">
+                @foreach($categories as $category)
+                <option value ="{{ $category->id }}" >{{ $category->categoryName }}</option>
+                @endforeach
+</select>
+        </div>
+        <div class="form-group">
             <label for="image">Image:</label>
             <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
+            <img src="{{ asset('Assets/Images/'.$car->image) }}" alt="cars" style="width:150px;">
             @error('image')
                 {{ $message }}
             @enderror

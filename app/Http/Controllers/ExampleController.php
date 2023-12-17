@@ -16,7 +16,15 @@ class ExampleController extends Controller
 public function ShowUpload() {
         return view('Upload');
 }
-        
+public function blog() {
+    return view('blog');
+}      
+
+
+
+public function artical() {
+    return view('artical');
+}   
         public function Upload(Request $request) {
 
             // $file_extension = $request->image->getClientOriginalExtension();

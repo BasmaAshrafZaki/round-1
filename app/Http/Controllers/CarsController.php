@@ -63,7 +63,7 @@ class CarsController extends Controller
             'description'=> 'required|string|Max:50',
             'image' => 'required|mimes:png,jpg,jpeg|max:2048',
             'price'=> 'required',
-            'category_id'=>'required|in:1,2'
+            'category_id'=>'required'
          ], $messages);
          $filename = $this->uploadFile($request->image ,'Assets/Images' );
          $data['image'] = $filename;
@@ -110,7 +110,7 @@ class CarsController extends Controller
             
             $data = $request->validate([
                 'title'=>'required|string',
-                'description'=> 'required|string|Max:50',
+                'description'=> 'required|string|Max:250',
                 'image' => 'sometimes|mimes:png,jpg,jpeg|max:2048',
                 'price'=> 'required',
                 'category_id'=> 'required'

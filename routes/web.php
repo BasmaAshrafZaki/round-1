@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExampleController;
+use App\Http\Controllers\mailsendController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CarsController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\MailController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -197,3 +200,12 @@ Route::post('Upload',[ExampleController::class,'Upload'])->name('Upload');
 Route::get('Place',[ExampleController::class,'Place']);
 
 Route::get('blog',[ExampleController::class,'blog']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes(['verify'=>true]);
+
+
+Route::post('sendmail',[mailsendController::class,'send'])->name('sendmail');
+Route::get('ContactUs', [mailsendController::class, 'create']);

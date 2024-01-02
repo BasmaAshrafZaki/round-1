@@ -13,7 +13,7 @@ class mailsendController extends Controller
         return view('ContactUs');
     }
     public function send(Request $request){
-        $data =[
+        $content =[
             'subject'=>$request->subject,
             'content'=>$request->content,
             'email'=>$request->email,
@@ -22,7 +22,7 @@ class mailsendController extends Controller
         ];
         
 
-       Mail::to('Basma@example.com')->send(new SendMail($request ));
+       Mail::to('Basma@example.com')->send(new SendMail($content ));
         
         return 'Done';
     }

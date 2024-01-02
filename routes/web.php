@@ -201,7 +201,6 @@ Route::get('Place',[ExampleController::class,'Place']);
 
 Route::get('blog',[ExampleController::class,'blog']);
 
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes(['verify'=>true]);
@@ -209,3 +208,41 @@ Auth::routes(['verify'=>true]);
 
 Route::post('sendmail',[mailsendController::class,'send'])->name('sendmail');
 Route::get('ContactUs', [mailsendController::class, 'create']);
+
+Route::get('car-index', [CarsController::class, 'index'])->middleware('verified');
+
+Route::get('Session',[ExampleController::class,'mySession']);
+
+// use App\Http\Middleware\Authenticate;
+ 
+// Route::get('/profile', function () {
+    
+// })->middleware(Authenticate::class);
+
+// Route::get('/', function () {
+//     // ...
+// })->middleware([First::class, Second::class]);
+
+// Route::get('/profile', function () {
+//     // ...
+// })->middleware('auth');
+
+// use App\Http\Middleware\EnsureTokenIsValid;
+ 
+// Route::withoutMiddleware([EnsureTokenIsValid::class])->group(function () {
+//     Route::get('/profile', function () {
+//         // ...
+//     });
+// });
+
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    ], function(){ 
+        Route::get('ContactUs',[mailsendController::class,'create']);
+        Route::post(' reciveContact', [NewsController::class, 'reciveContact'])->name('reciveContact');
+        Route::get('add-car', [CarsController::class, 'create']);
+        Route::post('car-added', [CarsController::class, 'store'])->name('car-added');
+    
+    });

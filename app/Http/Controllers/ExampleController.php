@@ -18,8 +18,15 @@ public function ShowUpload() {
 }
 public function blog() {
     return view('blog');
-}      
+}   
+   
+public function mySession()
+{
+    session()->put('test', 'First Laravel session');
+    $data = session('test');
+    return view('Session', compact('data'));
 
+}
 
 
 public function artical() {

@@ -11,28 +11,22 @@ use Illuminate\Queue\SerializesModels;
 
 class SendMail extends Mailable
 {
+    public array $data;
     
-   public function request($request)
- {
-    $request =[
-        'subject'=>$request->subject,
-        'content'=>$request->content,
-        'email'=>$request->email,
-       
-        
-    ];
- }  
+ 
+  
 
     /**
      * Create a new message instance.
      */
 
      
-    public function __construct($request)
+    public function __construct(array $content)
     {
-        $this->request =$request;
-   
+        $this->data = $content;
     }
+   
+    
 
     /**
      * Build the message.
@@ -46,11 +40,15 @@ class SendMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        return new Envelope(
+        // return new Envelope(
           
-            subject:  $this->request['subject'],
-            from: new Address( $this->request['email'])
+        //     subject:  $this->request['subject'],
+        //     from: new Address( $this->request['email'])
 
+        // );
+        return new Envelope(
+            from: new Address($this->data['email']),
+            subject: $this->data['subject'],
         );
     }
 
@@ -59,11 +57,18 @@ class SendMail extends Mailable
      */
     public function content(): Content
     {
-        return new Content(
-            with:[
-                'content'=>$this->request['content'],
+        // return new Content(
+        //     with:[
+        //         'content'=>$this->request['content'],
                 
-            ],
+        //     ],
+        // );
+        
+        return new Content(
+            markdown: 'emails.sendmail',
+            with:[
+                'content'=>$this->data['content']
+            ]
         );
     }
     /**

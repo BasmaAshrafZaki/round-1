@@ -1,10 +1,11 @@
 
+
 <x-mail::message>
 # Introduction
 
 The body of your message.<br>
 
-Content:{{$Content}}
+Content:{{$content}}
 
 <x-mail::button :url="''">
 Button Text

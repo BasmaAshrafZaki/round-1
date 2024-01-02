@@ -16,6 +16,11 @@
             <h2>Send Mail</h2>
             <form action="{{route('sendmail')}}" class="form" method="POST">
                 @csrf
+                <h1>{{__ ('messages.ContactUs')}} </h1>
+                <div>
+        <a href="{{ LaravelLocalization::getLocalizedURL('en') }}">English</a>
+        <a href="{{ LaravelLocalization::getLocalizedURL('ar') }}">Arabic</a>
+    </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <input type="email" name="email" placeholder="email" class="form-control">
